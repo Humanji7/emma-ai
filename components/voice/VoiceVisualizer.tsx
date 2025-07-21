@@ -30,8 +30,9 @@ export default function VoiceVisualizer({
       return () => clearTimeout(transition)
     } else if (state !== 'listening') {
       setDisplayLevel(0)
+      return undefined
     }
-    // No cleanup needed for non-listening states
+    return undefined
   }, [audioLevel, displayLevel, state])
 
   // Update CSS variable for audio-responsive animation

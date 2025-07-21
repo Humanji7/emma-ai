@@ -66,7 +66,7 @@ export class EmmaMonitor {
     validationResults.push(inputValidation)
     
     if (!inputValidation.passed) {
-      const alert = this.createAlert('warning', 'Input validation failed', {
+      const alert = this.createAlert('medium', 'Input validation failed', {
         gate: 'input',
         issues: inputValidation.issues,
         userInput: userInput.substring(0, 100) + '...'

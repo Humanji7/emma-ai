@@ -37,7 +37,7 @@ try {
       remaining: 99,
       reset: Date.now() + 60000,
     }),
-  } as Ratelimit
+  } as unknown as Ratelimit
 }
 
 export { ratelimit }

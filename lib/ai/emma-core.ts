@@ -122,8 +122,8 @@ export class EmmaAI {
   ): Promise<string> {
     // Build context from conversation history
     const recentHistory = this.conversationHistory.slice(-5).map(turn => ({
-      role: turn.speaker === 'user' ? 'user' : 'assistant',
-      content: turn.text
+      role: turn.speaker === 'user' ? 'user' as const : 'assistant' as const,
+      content: turn.content
     }))
 
     // Add emotion context if available
@@ -156,14 +156,14 @@ export class EmmaAI {
     this.conversationHistory.push(
       { 
         id: Date.now().toString(), 
-        text: userText, 
+        content: userText, 
         speaker: 'user', 
         timestamp: new Date(),
         emotion 
       },
       { 
         id: (Date.now() + 1).toString(), 
-        text: response, 
+        content: response, 
         speaker: 'emma', 
         timestamp: new Date() 
       }

@@ -6,9 +6,7 @@
         "@upstash/context7-mcp"
       ],
       "description": "Documentation and patterns for Emma AI",
-      "env": {
-        "CONTEXT7_API_KEY": "your_context7_key"
-      }
+      "env": {}
     },
     "sequential-thinking": {
       "command": "npx",
@@ -38,7 +36,7 @@
       ],
       "description": "GitHub operations for Emma AI",
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
       }
     }
   }

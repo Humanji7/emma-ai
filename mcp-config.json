@@ -1,0 +1,45 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "@upstash/context7-mcp"
+      ],
+      "description": "Documentation and patterns for Emma AI",
+      "env": {
+        "CONTEXT7_API_KEY": "your_context7_key"
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "description": "Sequential analysis for Emma AI",
+      "env": {}
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "@supabase/mcp-server-supabase",
+        "--project-ref=your-project-ref"
+      ],
+      "description": "Emma AI database operations",
+      "env": {
+        "SUPABASE_URL": "",
+        "SUPABASE_ANON_KEY": "",
+        "SUPABASE_SERVICE_ROLE_KEY": ""
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "@andrebuzeli/github-mcp-v2"
+      ],
+      "description": "GitHub operations for Emma AI",
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      }
+    }
+  }
+}

@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Emma AI Global Styles - Emotional Design Framework */
+
+:root {
+  /* Audio level CSS variable for voice animations */
+  --audio-level: 0;
+}
+
+@layer base {
+  /* Typography for emotional connection */
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-neutral-50 text-neutral-900;
+    @apply min-h-screen;
+  }
+  
+  /* Emma response text styling */
+  .emma-response-text {
+    @apply text-lg leading-relaxed text-neutral-800 font-normal;
+  }
+  
+  /* Voice prompt text styling */
+  .voice-prompt-text {
+    @apply text-voice-lg font-medium text-trust-700 text-center;
+  }
+}
+
+@layer components {
+  /* Voice Visualizer Components */
+  .voice-visualizer {
+    @apply relative w-30 h-30 rounded-full flex items-center justify-center transition-all duration-300;
+  }
+  
+  .voice-visualizer--idle {
+    @apply bg-gradient-to-br from-trust-50 to-trust-100 border-3 border-trust-200;
+    animation: gentle-pulse 2s ease-in-out infinite;
+  }
+  
+  .voice-visualizer--listening {
+    @apply bg-gradient-to-br from-warm-50 to-warm-100 border-3 border-warm-300;
+    animation: audio-responsive 0.1s ease-out infinite;
+  }
+  
+  .voice-visualizer--processing {
+    @apply bg-gradient-to-br from-trust-100 to-trust-200 border-3 border-trust-400;
+    animation: thinking-pulse 1.5s ease-in-out infinite;
+  }
+  
+  /* Voice Control Buttons */
+  .voice-control-button {
+    @apply min-w-16 min-h-16 rounded-full border-none flex items-center justify-center text-2xl font-semibold cursor-pointer transition-all duration-200;
+    @apply shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .voice-control-button--primary {
+    @apply bg-gradient-to-br from-trust-500 to-trust-600 text-white;
+    @apply hover:-translate-y-0.5 hover:shadow-trust-500/30 focus:ring-trust-300;
+  }
+  
+  .voice-control-button--danger {
+    @apply bg-gradient-to-br from-crisis-500 to-crisis-600 text-white;
+    @apply hover:-translate-y-0.5 hover:shadow-crisis-500/30 focus:ring-crisis-300;
+  }
+  
+  .voice-control-button--secondary {
+    @apply bg-neutral-100 text-neutral-600 border-2 border-neutral-200;
+    @apply hover:bg-neutral-200 focus:ring-neutral-300;
+  }
+  
+  /* Message Styling */
+  .message--emma {
+    @apply bg-gradient-to-br from-trust-50 to-trust-100 border border-trust-200;
+    @apply rounded-2xl rounded-bl-sm p-4 max-w-4/5 shadow-sm shadow-trust-500/10;
+    animation: message-appear 0.4s ease-out;
+  }
+  
+  .message--user {
+    @apply bg-gradient-to-br from-warm-50 to-warm-100 border border-warm-200;
+    @apply rounded-2xl rounded-br-sm p-4 max-w-4/5 ml-auto shadow-sm shadow-warm-500/10;
+  }
+  
+  /* Emotion Components */
+  .emotion-badge {
+    @apply px-2 py-0.5 rounded-xl font-medium text-xs;
+  }
+  
+  .emotion-badge--positive {
+    @apply bg-growth-100 text-growth-700;
+  }
+  
+  .emotion-badge--negative {
+    @apply bg-crisis-100 text-crisis-700;
+  }
+  
+  .emotion-badge--neutral {
+    @apply bg-neutral-100 text-neutral-600;
+  }
+  
+  /* Crisis Modal */
+  .crisis-modal {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-5;
+  }
+  
+  .crisis-modal-content {
+    @apply bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl;
+    animation: crisis-modal-appear 0.3s ease-out;
+  }
+  
+  /* Touch-friendly targets */
+  .touch-target {
+    @apply min-w-11 min-h-11 p-3;
+  }
+  
+  /* Focus indicators for accessibility */
+  .focusable:focus {
+    @apply outline-2 outline-trust-500 outline-offset-2;
+  }
+}
+
+@layer utilities {
+  /* Screen reader only content */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .voice-visualizer {
+      animation: none !important;
+    }
+    
+    .message--emma,
+    .message--user {
+      animation: none !important;
+    }
+    
+    .crisis-modal-content {
+      animation: none !important;
+    }
+  }
+  
+  /* High contrast support */
+  @media (prefers-contrast: high) {
+    :root {
+      --trust-500: #1d4ed8;
+      --warm-500: #d97706;
+      --crisis-500: #dc2626;
+      --neutral-600: #374151;
+    }
+  }
+}

@@ -160,7 +160,7 @@ function checkForEmergencyKeywords(text: string): boolean {
 }
 
 // Supported languages for Whisper
-export const SUPPORTED_LANGUAGES = [
+const SUPPORTED_LANGUAGES = [
   'af', 'ar', 'hy', 'az', 'be', 'bs', 'bg', 'ca', 'zh', 'hr', 'cs', 'da', 'nl',
   'en', 'et', 'fi', 'fr', 'gl', 'de', 'el', 'he', 'hi', 'hu', 'is', 'id', 'it',
   'ja', 'kn', 'kk', 'ko', 'lv', 'lt', 'mk', 'ms', 'ml', 'mt', 'mi', 'mr', 'ne',

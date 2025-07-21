@@ -31,6 +31,7 @@ export default function VoiceVisualizer({
     } else if (state !== 'listening') {
       setDisplayLevel(0)
     }
+    // No cleanup needed for non-listening states
   }, [audioLevel, displayLevel, state])
 
   // Update CSS variable for audio-responsive animation

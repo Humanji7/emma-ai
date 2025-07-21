@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import VoiceRecorder from './VoiceRecorder'
 import VoiceVisualizer from './VoiceVisualizer'
-import type { VoiceRecorderState } from '@/types'
+import type { VoiceRecorderState, AudioLevel } from '@/types'
 
 interface VoiceInterfaceProps {
   onUserInput: (text: string) => void

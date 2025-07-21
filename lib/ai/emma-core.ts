@@ -8,7 +8,7 @@ import type {
 } from '@/types'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || 'dummy-key-for-build',
 })
 
 // Emma's personality and expertise

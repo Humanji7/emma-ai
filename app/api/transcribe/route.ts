@@ -4,14 +4,25 @@ import { ratelimit } from '@/lib/ratelimit'
 import type { TranscriptionResult } from '@/types'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || 'dummy-key-for-build',
 })
 
 export async function POST(request: NextRequest) {
+  console.log('=== Transcription API called ===')
   try {
-    // Rate limiting
+    // Rate limiting with better error handling
     const clientIp = request.ip ?? 'anonymous'
-    const { success, limit, reset, remaining } = await ratelimit.limit(clientIp)
+    console.log('Client IP:', clientIp)
+    
+    let rateLimitResult
+    try {
+      rateLimitResult = await ratelimit.limit(clientIp)
+    } catch (rateLimitError) {
+      console.warn('Rate limiting failed, proceeding without limits:', rateLimitError)
+      rateLimitResult = { success: true, limit: 100, reset: Date.now() + 60000, remaining: 99 }
+    }
+    
+    const { success, limit, reset, remaining } = rateLimitResult
     
     if (!success) {
       return NextResponse.json(

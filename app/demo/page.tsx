@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { VoiceInterface } from '@/components/voice'
 import { Button } from '@/components/ui/Button'
 import type { VoiceMessage } from '@/types'
@@ -9,6 +9,15 @@ export default function DemoPage() {
   const [messages, setMessages] = useState<VoiceMessage[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Development mode: Reset processing state on hot reload
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && isProcessing) {
+      console.log('Dev mode: Resetting processing state after hot reload')
+      setIsProcessing(false)
+      setError(null)
+    }
+  }, [])
 
   const handleUserInput = async (text: string) => {
     // Prevent processing if already processing
@@ -228,6 +237,26 @@ export default function DemoPage() {
           {error && (
             <div className="mt-6 bg-crisis-50 border border-crisis-200 rounded-lg p-4">
               <p className="text-crisis-700 text-sm">{error}</p>
+            </div>
+          )}
+
+          {/* Development Debug Controls */}
+          {process.env.NODE_ENV === 'development' && (isProcessing || error) && (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-xs text-yellow-800 mb-2">Dev Controls:</p>
+              <button
+                onClick={() => {
+                  setIsProcessing(false)
+                  setError(null)
+                  console.log('Dev: Reset processing state')
+                }}
+                className="px-3 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-2"
+              >
+                🔄 Reset Processing
+              </button>
+              <span className="text-xs text-yellow-700">
+                Processing: {isProcessing ? '✅' : '❌'} | Error: {error ? '⚠️' : '✅'}
+              </span>
             </div>
           )}
         </div>

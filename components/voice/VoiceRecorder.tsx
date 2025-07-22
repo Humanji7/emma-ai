@@ -190,6 +190,26 @@ export default function VoiceRecorder({
     }
   }, [state])
 
+  // Development mode state reset for hot reload issues
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      // Reset state on hot reload or component remount
+      const handleBeforeUnload = () => {
+        onStateChange('idle')
+        setAudioLevel(0)
+        document.documentElement.style.setProperty('--audio-level', '0')
+      }
+      
+      // Also reset if component mounts in non-idle state during development
+      if (state !== 'idle') {
+        handleBeforeUnload()
+      }
+      
+      window.addEventListener('beforeunload', handleBeforeUnload)
+      return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [onStateChange, state])
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -284,6 +304,38 @@ export default function VoiceRecorder({
   return (
     <div className={cn("flex flex-col items-center space-y-2", className)}>
       {renderButton()}
+      
+      {/* Development Debug Controls */}
+      {process.env.NODE_ENV === 'development' && state !== 'idle' && (
+        <button
+          onClick={() => {
+            onStateChange('idle')
+            setAudioLevel(0)
+            document.documentElement.style.setProperty('--audio-level', '0')
+            // Force cleanup
+            if (mediaRecorderRef.current) {
+              try {
+                mediaRecorderRef.current.stop()
+              } catch (e) {
+                console.log('MediaRecorder already stopped')
+              }
+              mediaRecorderRef.current = null
+            }
+            if (audioContextRef.current) {
+              audioContextRef.current.close()
+              audioContextRef.current = null
+            }
+            if (animationFrameRef.current) {
+              cancelAnimationFrame(animationFrameRef.current)
+              animationFrameRef.current = null
+            }
+          }}
+          className="px-3 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+          title="Emergency reset for development"
+        >
+          🔄 Reset State
+        </button>
+      )}
       
       {/* Screen reader status */}
       <div className="sr-only" aria-live="polite">

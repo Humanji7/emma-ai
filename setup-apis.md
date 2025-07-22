@@ -175,7 +175,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 npm run dev
 
 # Откройте в браузере:
-# http://localhost:3000/test
+# http://localhost:3000/demo
 \`\`\`
 
 **Что должно работать:**

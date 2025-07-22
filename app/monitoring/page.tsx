@@ -248,7 +248,7 @@ export default function MonitoringPage() {
               {testResults.map((test, index) => (
                 <div key={index} className="border border-neutral-200 rounded-lg p-4">
                   <div className="flex items-start justify-between mb-2">
-                    <p className="text-neutral-800 font-medium">"{test.message}"</p>
+                    <p className="text-neutral-800 font-medium">&quot;{test.message}&quot;</p>
                     {test.loading && <div className="animate-spin h-4 w-4 border-2 border-trust-500 border-t-transparent rounded-full"></div>}
                   </div>
                   

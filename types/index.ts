@@ -21,6 +21,7 @@ export interface TranscriptionResult {
   segments?: TranscriptionSegment[];
   crisisDetected: boolean;
   requiresHumanReview: boolean;
+  provider?: string; // Which provider was used for transcription
 }
 
 export interface TranscriptionSegment {
@@ -28,6 +29,19 @@ export interface TranscriptionSegment {
   end: number;
   text: string;
   confidence: number;
+}
+
+// Voice Processing Error Types
+export class VoiceProcessingError extends Error {
+  code: string;
+  isRetryable: boolean;
+
+  constructor(message: string, code: string, isRetryable: boolean = false) {
+    super(message);
+    this.name = 'VoiceProcessingError';
+    this.code = code;
+    this.isRetryable = isRetryable;
+  }
 }
 
 // Crisis Detection Types

@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import OpenAI from 'openai'
 import { ratelimit } from '@/lib/ratelimit'
-import type { TranscriptionResult } from '@/types'
+import { TranscriptionService } from '@/lib/voice/transcription-service'
+import { TranscriptionResult, VoiceProcessingError } from '@/types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'dummy-key-for-build',
-})
+// Initialize transcription service with fallback providers
+const transcriptionService = new TranscriptionService()
 
 export async function POST(request: NextRequest) {
   console.log('=== Transcription API called ===')
@@ -71,41 +70,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Transcribe with OpenAI Whisper
-    const transcription = await openai.audio.transcriptions.create({
-      file: file,
-      model: 'whisper-1',
+    // Convert file to blob for transcription service
+    const audioBuffer = Buffer.from(await file.arrayBuffer())
+    const audioBlob = new Blob([audioBuffer], { type: file.type })
+
+    // Transcribe with resilient service (OpenAI + Web Speech API fallback)
+    const result = await transcriptionService.transcribe(audioBlob, {
       language: language,
-      response_format: 'verbose_json',
-      temperature: 0.2, // Lower temperature for more consistent results
+      temperature: 0.2,
+      maxRetries: 2
     })
 
-    // Validate transcription result
-    if (!transcription.text || transcription.text.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'No speech detected in audio' },
-        { status: 400 }
-      )
-    }
-
-    // Safety check for crisis indicators
-    const text = transcription.text.trim()
-    const hasEmergencyKeywords = checkForEmergencyKeywords(text)
-    
-    const result: TranscriptionResult = {
-      text,
-      confidence: 0.9, // Whisper doesn't provide confidence, using default
-      language: transcription.language || language,
-      duration: transcription.duration,
-      segments: transcription.segments?.map(segment => ({
-        start: segment.start,
-        end: segment.end,
-        text: segment.text,
-        confidence: 0.9 // Default confidence for segments
-      })) || [],
-      crisisDetected: hasEmergencyKeywords,
-      requiresHumanReview: hasEmergencyKeywords
-    }
+    console.log(`Transcription successful with provider: ${result.provider}`)
 
     return NextResponse.json(result, {
       headers: {
@@ -118,20 +94,46 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Transcription error:', error)
     
-    if (error instanceof Error) {
-      // Handle specific OpenAI errors
-      if (error.message.includes('rate_limit_exceeded')) {
-        return NextResponse.json(
-          { error: 'API rate limit exceeded. Please try again later.' },
-          { status: 429 }
-        )
-      }
-      
-      if (error.message.includes('invalid_api_key')) {
-        return NextResponse.json(
-          { error: 'Service temporarily unavailable' },
-          { status: 503 }
-        )
+    if (error instanceof VoiceProcessingError) {
+      // Handle VoiceProcessingError with specific error codes
+      switch (error.code) {
+        case 'NO_SPEECH_DETECTED':
+          return NextResponse.json(
+            { error: 'No speech detected in audio' },
+            { status: 400 }
+          )
+        case 'RATE_LIMIT_EXCEEDED':
+          return NextResponse.json(
+            { error: 'API rate limit exceeded. Please try again later.' },
+            { status: 429 }
+          )
+        case 'INVALID_API_KEY':
+        case 'INSUFFICIENT_QUOTA':
+          return NextResponse.json(
+            { error: 'Service temporarily unavailable' },
+            { status: 503 }
+          )
+        case 'ALL_PROVIDERS_FAILED':
+          return NextResponse.json(
+            { error: 'All transcription services are currently unavailable. Please try again later.' },
+            { status: 503 }
+          )
+        case 'PERMISSION_DENIED':
+          return NextResponse.json(
+            { error: 'Microphone permission required for transcription' },
+            { status: 403 }
+          )
+        case 'NETWORK_ERROR':
+        case 'TIMEOUT':
+          return NextResponse.json(
+            { error: 'Network error. Please check your connection and try again.' },
+            { status: 503 }
+          )
+        default:
+          return NextResponse.json(
+            { error: 'Failed to process audio. Please try again.' },
+            { status: 500 }
+          )
       }
     }
 
@@ -141,40 +143,3 @@ export async function POST(request: NextRequest) {
     )
   }
 }
-
-// Emergency keyword detection
-function checkForEmergencyKeywords(text: string): boolean {
-  const emergencyKeywords = [
-    // Direct harm indicators
-    'kill myself', 'suicide', 'end my life', 'want to die',
-    'hurt myself', 'self-harm', 'cut myself', 'harm myself',
-    
-    // Method indicators
-    'overdose', 'pills', 'jump off', 'hang myself',
-    'shoot myself', 'knife', 'blade',
-    
-    // Desperation indicators
-    'can\'t go on', 'no point living', 'better off dead',
-    'end it all', 'give up', 'hopeless',
-    
-    // Crisis language
-    'emergency', 'help me', 'save me', 'desperate'
-  ]
-  
-  const lowerText = text.toLowerCase()
-  
-  return emergencyKeywords.some(keyword => {
-    // Use word boundaries to avoid false positives
-    const regex = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')
-    return regex.test(lowerText)
-  })
-}
-
-// Supported languages for Whisper
-const SUPPORTED_LANGUAGES = [
-  'af', 'ar', 'hy', 'az', 'be', 'bs', 'bg', 'ca', 'zh', 'hr', 'cs', 'da', 'nl',
-  'en', 'et', 'fi', 'fr', 'gl', 'de', 'el', 'he', 'hi', 'hu', 'is', 'id', 'it',
-  'ja', 'kn', 'kk', 'ko', 'lv', 'lt', 'mk', 'ms', 'ml', 'mt', 'mi', 'mr', 'ne',
-  'no', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk', 'sl', 'es', 'sw', 'sv', 'tl',
-  'ta', 'th', 'tr', 'uk', 'ur', 'vi', 'cy'
-] as const

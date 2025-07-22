@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils'
 import type { VoiceRecorderState, AudioLevel } from '@/types'
 
 interface VoiceRecorderProps {
+  state: VoiceRecorderState
+  onStateChange: (state: VoiceRecorderState) => void
   onTranscription: (text: string) => void
   onError: (error: string) => void
   disabled?: boolean
@@ -13,12 +15,13 @@ interface VoiceRecorderProps {
 }
 
 export default function VoiceRecorder({
+  state,
+  onStateChange,
   onTranscription,
   onError,
   disabled = false,
   className
 }: VoiceRecorderProps) {
-  const [state, setState] = useState<VoiceRecorderState>('idle')
   const [audioLevel, setAudioLevel] = useState<AudioLevel>(0)
   const [isSupported, setIsSupported] = useState(true)
   
@@ -67,7 +70,7 @@ export default function VoiceRecorder({
     }
 
     try {
-      setState('requesting-permission')
+      onStateChange('requesting-permission')
       
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -98,27 +101,43 @@ export default function VoiceRecorder({
       }
       
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' })
-        
-        // Stop all tracks
-        stream.getTracks().forEach(track => track.stop())
-        
-        setState('processing')
-        
         try {
-          // Send to transcription service
-          const transcriptionText = await transcribeAudio(audioBlob)
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' })
           
-          if (transcriptionText.trim()) {
+          // Stop all tracks
+          stream.getTracks().forEach(track => track.stop())
+          
+          // Only process if we have audio data
+          if (audioBlob.size === 0) {
+            onError('No audio recorded. Please try again.')
+            onStateChange('idle')
+            return
+          }
+          
+          onStateChange('processing')
+          
+          // Send to transcription service with timeout
+          const transcriptionText = await Promise.race([
+            transcribeAudio(audioBlob),
+            new Promise<string>((_, reject) => 
+              setTimeout(() => reject(new Error('Transcription timeout')), 30000)
+            )
+          ])
+          
+          if (transcriptionText && transcriptionText.trim()) {
             onTranscription(transcriptionText)
           } else {
-            onError('No speech detected. Please try again.')
+            onError('No speech detected. Please try speaking louder.')
           }
         } catch (error) {
-          onError('Failed to process audio. Please try again.')
           console.error('Transcription error:', error)
+          if (error instanceof Error && error.message.includes('timeout')) {
+            onError('Request timed out. Please try again.')
+          } else {
+            onError('Failed to process audio. Please check your connection.')
+          }
         } finally {
-          setState('idle')
+          onStateChange('idle')
           setAudioLevel(0)
           document.documentElement.style.setProperty('--audio-level', '0')
         }
@@ -126,13 +145,13 @@ export default function VoiceRecorder({
       
       mediaRecorder.onerror = (event) => {
         onError('Recording failed. Please try again.')
-        setState('idle')
+        onStateChange('idle')
         console.error('MediaRecorder error:', event)
       }
       
       mediaRecorderRef.current = mediaRecorder
       mediaRecorder.start()
-      setState('listening')
+      onStateChange('listening')
       
       // Start audio level monitoring
       updateAudioLevel()
@@ -147,10 +166,10 @@ export default function VoiceRecorder({
           onError('Failed to access microphone. Please try again.')
         }
       }
-      setState('idle')
+      onStateChange('idle')
       console.error('getUserMedia error:', error)
     }
-  }, [isSupported, disabled, onError, onTranscription, updateAudioLevel])
+  }, [isSupported, disabled, onError, onTranscription, updateAudioLevel, onStateChange])
 
   // Stop recording
   const stopRecording = useCallback(() => {
@@ -185,6 +204,11 @@ export default function VoiceRecorder({
 
   // Handle click
   const handleClick = () => {
+    // Prevent multiple rapid clicks causing race conditions
+    if (state === 'requesting-permission' || state === 'processing') {
+      return
+    }
+    
     if (state === 'idle') {
       startRecording()
     } else if (state === 'listening') {

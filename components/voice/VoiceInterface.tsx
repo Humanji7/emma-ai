@@ -91,6 +91,8 @@ export default function VoiceInterface({
         {/* Voice Recorder overlaid on visualizer */}
         <div className="absolute inset-0 flex items-center justify-center">
           <VoiceRecorder
+            state={recorderState}
+            onStateChange={setRecorderState}
             onTranscription={handleTranscription}
             onError={handleError}
             disabled={disabled}
@@ -108,7 +110,7 @@ export default function VoiceInterface({
         {/* Additional guidance for first-time users */}
         {recorderState === 'idle' && !currentError && (
           <p className="text-sm text-neutral-500 mt-2">
-            Share what's on your mind - Emma is here to listen
+            Share what&apos;s on your mind - Emma is here to listen
           </p>
         )}
         

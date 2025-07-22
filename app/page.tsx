@@ -10,10 +10,10 @@ export default function HomePage() {
         </p>
         <div className="space-y-4">
           <a
-            href="/test"
+            href="/demo"
             className="inline-block px-8 py-4 bg-trust-600 text-white rounded-xl hover:bg-trust-700 transition-colors font-medium"
           >
-            Test Voice Interface
+            Try Emma AI
           </a>
           <p className="text-sm text-neutral-600">
             Development build - API keys configured 

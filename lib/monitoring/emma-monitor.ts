@@ -7,7 +7,7 @@
 import { QualityGateSystem, type ValidationResult, type QualityMetrics } from './quality-gates'
 import type { 
   SafetyValidatedResponse, 
-  CrisisDetectionResult, 
+  CrisisDetectionResult,
   EmotionData,
   ConversationTurn 
 } from '@/types'

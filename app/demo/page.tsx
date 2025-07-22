@@ -11,12 +11,23 @@ export default function DemoPage() {
   const [error, setError] = useState<string | null>(null)
 
   const handleUserInput = async (text: string) => {
+    // Prevent processing if already processing
+    if (isProcessing) {
+      return
+    }
+    
+    // Validate input
+    if (!text || !text.trim()) {
+      setError('Please provide a message.')
+      return
+    }
+    
     setError(null)
     
     // Add user message
     const userMessage: VoiceMessage = {
       id: Date.now().toString(),
-      text,
+      text: text.trim(),
       timestamp: new Date(),
       speaker: 'user'
     }
@@ -25,23 +36,34 @@ export default function DemoPage() {
     setIsProcessing(true)
 
     try {
-      // Call Emma AI API
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: text,
-          // In production, would include emotion data from voice analysis
+      // Call Emma AI API with timeout
+      const response = await Promise.race([
+        fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: text.trim(),
+            // In production, would include emotion data from voice analysis
+          }),
         }),
-      })
+        new Promise<Response>((_, reject) => 
+          setTimeout(() => reject(new Error('Request timeout')), 15000)
+        )
+      ])
 
       if (!response.ok) {
-        throw new Error('Failed to get response from Emma')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`)
       }
 
       const data = await response.json()
+      
+      // Validate response data
+      if (!data.response) {
+        throw new Error('Invalid response from server')
+      }
       
       // Add Emma's response
       const emmaMessage: VoiceMessage = {
@@ -60,7 +82,17 @@ export default function DemoPage() {
 
     } catch (err) {
       console.error('Error:', err)
-      setError('Sorry, I had trouble processing that. Please try again.')
+      if (err instanceof Error) {
+        if (err.message.includes('timeout')) {
+          setError('Request timed out. Please check your connection and try again.')
+        } else if (err.message.includes('Rate limit')) {
+          setError('Too many requests. Please wait a moment and try again.')
+        } else {
+          setError(`Error: ${err.message}`)
+        }
+      } else {
+        setError('Sorry, I had trouble processing that. Please try again.')
+      }
     } finally {
       setIsProcessing(false)
     }
@@ -93,10 +125,10 @@ export default function DemoPage() {
         {messages.length === 0 && (
           <div className="text-center py-12">
             <h2 className="text-3xl font-bold text-trust-800 mb-4">
-              Hi, I'm Emma
+              Hi, I&apos;m Emma
             </h2>
             <p className="text-lg text-neutral-700 mb-8 max-w-2xl mx-auto">
-              I'm here to listen and support you through relationship challenges. 
+              I&apos;m here to listen and support you through relationship challenges. 
               Everything you share is confidential and judgment-free.
             </p>
             <div className="bg-white/60 rounded-2xl p-6 max-w-md mx-auto">
@@ -159,6 +191,38 @@ export default function DemoPage() {
             disabled={isProcessing}
             prompt={isProcessing ? "Emma is thinking..." : "Tap to share what's on your mind"}
           />
+          
+          {/* Text Input Fallback */}
+          <div className="mt-6 pt-6 border-t border-neutral-200">
+            <div className="flex gap-3">
+              <input
+                type="text"
+                placeholder="Or type your message here..."
+                className="flex-1 px-4 py-3 border border-neutral-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-trust-400 focus:border-transparent"
+                disabled={isProcessing}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && e.currentTarget.value.trim() && !isProcessing) {
+                    e.preventDefault()
+                    handleUserInput(e.currentTarget.value.trim())
+                    e.currentTarget.value = ''
+                  }
+                }}
+              />
+              <Button
+                onClick={() => {
+                  const input = document.querySelector('input[type="text"]') as HTMLInputElement
+                  if (input?.value.trim() && !isProcessing) {
+                    handleUserInput(input.value.trim())
+                    input.value = ''
+                  }
+                }}
+                disabled={isProcessing}
+                className="px-6 py-3 bg-trust-500 hover:bg-trust-600 disabled:bg-trust-300 disabled:cursor-not-allowed text-white rounded-2xl"
+              >
+                {isProcessing ? 'Sending...' : 'Send'}
+              </Button>
+            </div>
+          </div>
           
           {/* Error Display */}
           {error && (

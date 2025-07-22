@@ -49,9 +49,8 @@ npm run dev
 
 ## 🎯 Usage
 
-1. **Voice Demo**: http://localhost:3000/demo
+1. **Emma AI Demo**: http://localhost:3000/demo
 2. **Monitoring Dashboard**: http://localhost:3000/monitoring
-3. **Testing Interface**: http://localhost:3000/test
 
 ### Example Conversations
 

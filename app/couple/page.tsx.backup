@@ -1,0 +1,696 @@
+'use client'
+
+import { useState, useRef, useEffect } from 'react'
+import { CoupleVoiceRecorder } from '@/components/voice'
+import { ConflictInterventionService } from '@/services/ConflictInterventionService'
+// SimpleCoupleAPITest removed with demo components
+import UnifiedCoupleVoice from '@/components/voice/UnifiedCoupleVoice'
+import { cn } from '@/lib/utils'
+import type { VoiceRecorderState, Speaker, CoupleVoiceMessage, ConflictMetrics } from '@/types'
+
+export default function CouplePage() {
+  const [recorderState, setRecorderState] = useState<VoiceRecorderState>('idle')
+  const [messages, setMessages] = useState<CoupleVoiceMessage[]>([])
+  const [currentSpeaker, setCurrentSpeaker] = useState<Speaker>('A')
+  const [audioLevelA, setAudioLevelA] = useState(0)
+  const [audioLevelB, setAudioLevelB] = useState(0)
+  const [conflictMetrics, setConflictMetrics] = useState<ConflictMetrics>({
+    currentLevel: 0,
+    escalationTrend: 'stable',
+    blamePatternCount: 0,
+    interruptionCount: 0,
+    lastInterventionTime: 0,
+    sessionStartTime: Date.now()
+  })
+  const [successfulSwitches, setSuccessfulSwitches] = useState(0)
+  const [useAutoDetection, setUseAutoDetection] = useState(false)
+  const [useAdvancedDetection, setUseAdvancedDetection] = useState(false)
+  const [useCalibratedDetection, setUseCalibratedDetection] = useState(false)
+  const [activeTab, setActiveTab] = useState<'unified' | 'voice' | 'api'>('unified')
+
+  // Initialize conflict intervention service
+  const conflictServiceRef = useRef<ConflictInterventionService | null>(null)
+
+  useEffect(() => {
+    if (!conflictServiceRef.current) {
+      conflictServiceRef.current = new ConflictInterventionService()
+      console.log('🧘‍♀️ Emma conflict intervention service initialized')
+    }
+    
+    return () => {
+      conflictServiceRef.current?.resetSession()
+    }
+  }, [])
+
+  const handleTranscription = (text: string, speaker: Speaker) => {
+    const newMessage: CoupleVoiceMessage = {
+      id: Date.now().toString(),
+      text: text.trim(),
+      timestamp: new Date(),
+      speaker,
+      conflictLevel: 0,
+      emotionalTone: 'calm'
+    }
+
+    // Analyze message for conflict patterns with Emma's intervention service
+    if (conflictServiceRef.current) {
+      const analysis = conflictServiceRef.current.analyzeMessage(newMessage)
+      
+      // Update message with conflict analysis
+      newMessage.conflictLevel = analysis.conflictLevel
+      
+      // Determine emotional tone based on conflict level
+      if (analysis.conflictLevel >= 7) {
+        newMessage.emotionalTone = 'angry'
+      } else if (analysis.conflictLevel >= 4) {
+        newMessage.emotionalTone = 'frustrated'
+      } else if (analysis.conflictLevel >= 2) {
+        newMessage.emotionalTone = 'defensive'
+      } else {
+        newMessage.emotionalTone = 'calm'
+      }
+
+      console.log(`💬 Message from ${speaker} (conflict: ${analysis.conflictLevel.toFixed(1)}):`, text)
+
+      // Track successful speaker switches
+      if (messages.length > 0) {
+        const lastMessage = messages[messages.length - 1]
+        if (lastMessage.speaker !== speaker && 
+            lastMessage.speaker !== 'emma' && 
+            (speaker === 'A' || speaker === 'B')) {
+          setSuccessfulSwitches(prev => prev + 1)
+          console.log(`🎯 Successful speaker switch detected: ${lastMessage.speaker} → ${speaker}`)
+        }
+      }
+
+      // Add user message to conversation
+      const updatedMessages = [...messages, newMessage]
+      setMessages(updatedMessages)
+
+      // Update conflict metrics
+      setConflictMetrics(conflictServiceRef.current.getConflictMetrics())
+
+      // Add Emma intervention if needed
+      if (analysis.shouldIntervene && analysis.emmaResponse) {
+        console.log(`🧘‍♀️ Emma intervening (${analysis.interventionType}):`, analysis.emmaResponse)
+        
+        // Create Emma's intervention message
+        const emmaMessage: CoupleVoiceMessage = {
+          id: (Date.now() + 1).toString(),
+          text: analysis.emmaResponse,
+          timestamp: new Date(Date.now() + 100), // Slight delay for natural flow
+          speaker: 'emma',
+          emotionalTone: 'calm',
+          conflictLevel: 0
+        }
+
+        // Add Emma's intervention with a small delay for natural conversation flow
+        setTimeout(() => {
+          setMessages(prev => [...prev, emmaMessage])
+        }, 1500) // 1.5 second delay
+      }
+    } else {
+      // Fallback if service not available
+      setMessages(prev => [...prev, newMessage])
+      console.log(`💬 New message from ${speaker}:`, text)
+    }
+  }
+
+  const handleError = (error: string) => {
+    console.error('🚨 Voice error:', error)
+  }
+
+  const handleAudioLevel = (levelA: number, levelB: number) => {
+    setAudioLevelA(levelA)
+    setAudioLevelB(levelB)
+  }
+
+  const handleSpeakerChange = (speaker: Speaker) => {
+    setCurrentSpeaker(speaker)
+    console.log(`🎤 Speaker switched to: ${speaker}`)
+  }
+
+  const getSpeakerColor = (speaker: Speaker | 'emma') => {
+    switch (speaker) {
+      case 'A':
+        return 'bg-blue-100 border-blue-300 text-blue-800'
+      case 'B':
+        return 'bg-orange-100 border-orange-300 text-orange-800'
+      case 'emma':
+        return 'bg-green-100 border-green-300 text-green-800'
+      default:
+        return 'bg-gray-100 border-gray-300 text-gray-800'
+    }
+  }
+
+  const getSpeakerLabel = (speaker: Speaker | 'emma') => {
+    switch (speaker) {
+      case 'A':
+        return 'Partner A'
+      case 'B':
+        return 'Partner B'
+      case 'emma':
+        return 'Emma'
+      default:
+        return 'Unknown'
+    }
+  }
+
+  const getConflictLevelColor = (level: number) => {
+    if (level >= 8) return 'text-red-600 font-bold'
+    if (level >= 6) return 'text-orange-600 font-semibold'
+    if (level >= 4) return 'text-yellow-600'
+    if (level >= 2) return 'text-blue-600'
+    return 'text-green-600'
+  }
+
+  const getEscalationTrendColor = (trend: 'escalating' | 'stable' | 'de-escalating') => {
+    switch (trend) {
+      case 'escalating': return 'text-red-600'
+      case 'de-escalating': return 'text-green-600'
+      default: return 'text-neutral-600'
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-neutral-50 to-orange-50">
+      {/* Header */}
+      <header className="bg-white/80 backdrop-blur-sm border-b border-neutral-200">
+        <div className="max-w-4xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-neutral-800">Emma AI - Couple Session</h1>
+              <p className="text-sm text-neutral-600">Real-time relationship coaching with voice detection</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              {/* Tab Selection */}
+              <div className="flex rounded-lg bg-gray-100 p-1">
+                <button
+                  onClick={() => setActiveTab('unified')}
+                  className={cn(
+                    'px-3 py-1 rounded-md text-sm font-medium transition-colors',
+                    activeTab === 'unified' 
+                      ? 'bg-white text-gray-900 shadow-sm' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  )}
+                >
+                  🚀 Unified Interface
+                </button>
+                <button
+                  onClick={() => setActiveTab('voice')}
+                  className={cn(
+                    'px-3 py-1 rounded-md text-sm font-medium transition-colors',
+                    activeTab === 'voice' 
+                      ? 'bg-white text-gray-900 shadow-sm' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  )}
+                >
+                  🎤 Legacy Voice
+                </button>
+                <button
+                  onClick={() => setActiveTab('api')}
+                  className={cn(
+                    'px-3 py-1 rounded-md text-sm font-medium transition-colors',
+                    activeTab === 'api' 
+                      ? 'bg-white text-gray-900 shadow-sm' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  )}
+                >
+                  🔗 API Demo
+                </button>
+              </div>
+              <div className="text-sm text-neutral-500">Test Mode</div>
+              <button
+                onClick={() => setUseAutoDetection(!useAutoDetection)}
+                className={cn(
+                  'px-3 py-1 rounded-full text-xs font-medium transition-colors',
+                  useAutoDetection 
+                    ? 'bg-purple-100 text-purple-800 border border-purple-300' 
+                    : 'bg-gray-100 text-gray-600 border border-gray-300'
+                )}
+              >
+                🎯 Auto: {useAutoDetection ? 'ON' : 'OFF'}
+              </button>
+              <button
+                onClick={() => setUseAdvancedDetection(!useAdvancedDetection)}
+                className={cn(
+                  'px-3 py-1 rounded-full text-xs font-medium transition-colors',
+                  useAdvancedDetection 
+                    ? 'bg-blue-100 text-blue-800 border border-blue-300' 
+                    : 'bg-gray-100 text-gray-600 border border-gray-300'
+                )}
+              >
+                🚀 Hybrid AI: {useAdvancedDetection ? 'ON' : 'OFF'}
+              </button>
+              <button
+                onClick={() => setUseCalibratedDetection(!useCalibratedDetection)}
+                className={cn(
+                  'px-3 py-1 rounded-full text-xs font-medium transition-colors',
+                  useCalibratedDetection 
+                    ? 'bg-green-100 text-green-800 border border-green-300' 
+                    : 'bg-gray-100 text-gray-600 border border-gray-300'
+                )}
+              >
+                🔊 Calibrated: {useCalibratedDetection ? 'ON' : 'OFF'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-4xl mx-auto p-6">
+        {/* Unified Interface Tab */}
+        {activeTab === 'unified' && (
+          <UnifiedCoupleVoice
+            onMessage={(message) => {
+              setMessages(prev => [...prev, message])
+              console.log('📝 New message:', message)
+            }}
+            onError={(error) => {
+              console.error('🚨 Voice error:', error)
+            }}
+            onStateChange={(state) => {
+              console.log('🔄 Voice state changed:', state)
+            }}
+          />
+        )}
+
+        {/* API Demo Tab */}
+        {activeTab === 'api' && (
+          <div className="text-center py-8 text-gray-500">
+            <p>API Demo удален - используйте Unified Voice Interface</p>
+          </div>
+        )}
+
+        {/* Legacy Voice Interface Tab */}
+        {activeTab === 'voice' && (
+          <>
+            {/* Welcome Message */}
+            {messages.length === 0 && (
+          <div className="text-center py-12">
+            <h2 className="text-3xl font-bold text-neutral-800 mb-4">
+              👥 Couple Session Testing
+            </h2>
+            <p className="text-lg text-neutral-700 mb-8 max-w-2xl mx-auto">
+              Test the multi-speaker voice detection system. Each partner can speak and will be 
+              automatically identified by color and position.
+            </p>
+            <div className="flex justify-center space-x-8 mb-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-2"></div>
+                <p className="text-blue-700 font-medium">Partner A</p>
+                <p className="text-sm text-neutral-600">Blue messages</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-2"></div>
+                <p className="text-green-700 font-medium">Emma</p>
+                <p className="text-sm text-neutral-600">Green interventions</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-orange-500 rounded-full mx-auto mb-2"></div>
+                <p className="text-orange-700 font-medium">Partner B</p>
+                <p className="text-sm text-neutral-600">Orange messages</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Messages Display */}
+        {messages.length > 0 && (
+          <div className="mb-8 space-y-4 max-h-[400px] overflow-y-auto">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.speaker === 'A' ? 'justify-start' : 
+                  message.speaker === 'B' ? 'justify-end' : 
+                  'justify-center'
+                }`}
+              >
+                <div className={`max-w-[70%] p-4 rounded-2xl border-2 ${getSpeakerColor(message.speaker)} ${
+                  message.speaker === 'A' ? 'rounded-bl-sm' :
+                  message.speaker === 'B' ? 'rounded-br-sm' :
+                  'rounded-lg'
+                }`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold uppercase tracking-wide">
+                      {getSpeakerLabel(message.speaker)}
+                    </span>
+                    <span className="text-xs opacity-60">
+                      {new Date(message.timestamp).toLocaleTimeString()}
+                    </span>
+                  </div>
+                  <p className="whitespace-pre-wrap">{message.text}</p>
+                  {message.conflictLevel !== undefined && message.conflictLevel > 0 && (
+                    <div className="mt-2 text-xs">
+                      <span className="bg-red-100 text-red-700 px-2 py-1 rounded">
+                        Conflict Level: {message.conflictLevel}/10
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Audio Level Visualization */}
+        <div className="mb-6 flex justify-center space-x-8">
+          <div className="text-center">
+            <p className="text-sm font-medium text-blue-700 mb-2">Partner A</p>
+            <div className="w-20 h-4 bg-blue-100 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-blue-500 transition-all duration-150"
+                style={{ width: `${audioLevelA * 100}%` }}
+              />
+            </div>
+            <p className="text-xs text-neutral-500 mt-1">{(audioLevelA * 100).toFixed(0)}%</p>
+          </div>
+          
+          <div className="text-center">
+            <p className="text-sm font-medium text-orange-700 mb-2">Partner B</p>
+            <div className="w-20 h-4 bg-orange-100 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-orange-500 transition-all duration-150"
+                style={{ width: `${audioLevelB * 100}%` }}
+              />
+            </div>
+            <p className="text-xs text-neutral-500 mt-1">{(audioLevelB * 100).toFixed(0)}%</p>
+          </div>
+        </div>
+
+        {/* Emma's Voice Detection Status */}
+        <div className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-2 border-green-200">
+          <h3 className="text-lg font-semibold text-green-800 mb-4 text-center flex items-center justify-center">
+            👂 Emma's Audio Perception
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Current Active Speaker */}
+            <div className="text-center">
+              <p className="text-sm text-green-700 font-medium mb-2">Currently Speaking</p>
+              <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-bold border-2 ${
+                currentSpeaker === 'A' 
+                  ? 'bg-blue-500 text-white border-blue-600 animate-pulse' 
+                  : currentSpeaker === 'B'
+                  ? 'bg-orange-500 text-white border-orange-600 animate-pulse'
+                  : 'bg-gray-200 text-gray-600 border-gray-300'
+              }`}>
+                {currentSpeaker === 'A' ? '🗣️ Partner A' : 
+                 currentSpeaker === 'B' ? '🗣️ Partner B' : 
+                 '🤫 Silence'}
+              </div>
+            </div>
+
+            {/* Voice Detection Mode */}
+            <div className="text-center">
+              <p className="text-sm text-green-700 font-medium mb-2">Detection Mode</p>
+              <div className="inline-flex items-center px-3 py-2 rounded-lg bg-white border border-green-300">
+                <div className={cn(
+                  "w-2 h-2 rounded-full mr-2",
+                  useAdvancedDetection ? "bg-blue-500 animate-pulse" :
+                  useAutoDetection ? "bg-purple-500 animate-pulse" : 
+                  "bg-green-500 animate-pulse"
+                )}></div>
+                <span className="text-sm font-medium text-green-800">
+                  {useCalibratedDetection ? 'Calibrated Detection' :
+                   useAdvancedDetection ? 'Hybrid AI Detection' : 
+                   useAutoDetection ? 'Auto Detection' : 
+                   'Hybrid Auto + Manual'}
+                </span>
+              </div>
+            </div>
+
+            {/* Speaker Switch History */}
+            <div className="text-center">
+              <p className="text-sm text-green-700 font-medium mb-2">Voice Switching</p>
+              <div className="text-xs text-green-600 mb-2">
+                {messages.length > 1 ? (
+                  <div className="flex items-center justify-center">
+                    <span className={`px-2 py-1 rounded text-white text-xs ${
+                      messages[messages.length - 2]?.speaker === 'A' ? 'bg-blue-400' : 
+                      messages[messages.length - 2]?.speaker === 'B' ? 'bg-orange-400' : 'bg-green-400'
+                    }`}>
+                      {messages[messages.length - 2]?.speaker === 'A' ? 'A' :
+                       messages[messages.length - 2]?.speaker === 'B' ? 'B' : 'E'}
+                    </span>
+                    <span className="mx-1">→</span>
+                    <span className={`px-2 py-1 rounded text-white text-xs ${
+                      messages[messages.length - 1]?.speaker === 'A' ? 'bg-blue-500' : 
+                      messages[messages.length - 1]?.speaker === 'B' ? 'bg-orange-500' : 'bg-green-500'
+                    }`}>
+                      {messages[messages.length - 1]?.speaker === 'A' ? 'A' :
+                       messages[messages.length - 1]?.speaker === 'B' ? 'B' : 'E'}
+                    </span>
+                  </div>
+                ) : (
+                  'No switches yet'
+                )}
+              </div>
+              <div className={`text-lg font-bold ${successfulSwitches > 0 ? 'text-green-600' : 'text-gray-400'}`}>
+                {successfulSwitches} successful switch{successfulSwitches !== 1 ? 'es' : ''}
+              </div>
+            </div>
+          </div>
+
+          {/* Voice Detection Success Indicator */}
+          <div className="mt-4 pt-4 border-t border-green-200">
+            <div className="flex items-center justify-center space-x-4">
+              {/* Auto Detection Status */}
+              <div className="flex items-center space-x-2">
+                <div className={`w-3 h-3 rounded-full ${
+                  audioLevelA > 0.1 || audioLevelB > 0.1 ? 'bg-green-500 animate-pulse' : 'bg-gray-300'
+                }`}></div>
+                <span className="text-sm text-green-700">
+                  {audioLevelA > 0.1 || audioLevelB > 0.1 ? 'Audio Detected' : 'Waiting for Audio'}
+                </span>
+              </div>
+
+              {/* Speaker Differentiation Status */}
+              <div className="flex items-center space-x-2">
+                <div className={`w-3 h-3 rounded-full ${
+                  messages.filter(m => m.speaker === 'A').length > 0 && 
+                  messages.filter(m => m.speaker === 'B').length > 0 
+                    ? 'bg-blue-500' : 'bg-yellow-500'
+                }`}></div>
+                <span className="text-sm text-green-700">
+                  {messages.filter(m => m.speaker === 'A').length > 0 && 
+                   messages.filter(m => m.speaker === 'B').length > 0 
+                    ? 'Both Speakers Detected' : 'Single Speaker Mode'}
+                </span>
+              </div>
+
+              {/* Manual Override Indicator */}
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+                <span className="text-sm text-green-700">Manual Override Ready</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Detection Summary Stats */}
+          {messages.length > 0 && (
+            <div className="mt-3 grid grid-cols-3 gap-4 text-center">
+              <div>
+                <p className="text-xs text-green-600">Detection Rate</p>
+                <p className="text-lg font-bold text-green-800">
+                  {Math.round((successfulSwitches / Math.max(messages.filter(m => m.speaker !== 'emma').length - 1, 1)) * 100)}%
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-green-600">Total Messages</p>
+                <p className="text-lg font-bold text-green-800">{messages.length}</p>
+              </div>
+              <div>
+                <p className="text-xs text-green-600">Emma Responses</p>
+                <p className="text-lg font-bold text-green-800">
+                  {messages.filter(m => m.speaker === 'emma').length}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Conflict Metrics Panel */}
+        {messages.length > 0 && (
+          <div className="mb-6 bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-neutral-200">
+            <h3 className="text-lg font-semibold text-neutral-800 mb-4 text-center">
+              🧘‍♀️ Emma's Conflict Analysis
+            </h3>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center">
+                <p className="text-xs text-neutral-500 mb-1">Conflict Level</p>
+                <p className={`text-2xl font-bold ${getConflictLevelColor(conflictMetrics.currentLevel)}`}>
+                  {conflictMetrics.currentLevel.toFixed(1)}
+                </p>
+                <p className="text-xs text-neutral-500">/ 10</p>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-xs text-neutral-500 mb-1">Trend</p>
+                <p className={`text-sm font-medium ${getEscalationTrendColor(conflictMetrics.escalationTrend)}`}>
+                  {conflictMetrics.escalationTrend === 'escalating' ? '📈 Rising' :
+                   conflictMetrics.escalationTrend === 'de-escalating' ? '📉 Cooling' :
+                   '➡️ Stable'}
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-xs text-neutral-500 mb-1">Blame Patterns</p>
+                <p className="text-lg font-semibold text-neutral-800">
+                  {conflictMetrics.blamePatternCount}
+                </p>
+                <p className="text-xs text-neutral-500">detected</p>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-xs text-neutral-500 mb-1">Session Time</p>
+                <p className="text-lg font-semibold text-neutral-800">
+                  {Math.round((Date.now() - conflictMetrics.sessionStartTime) / 60000)}m
+                </p>
+              </div>
+            </div>
+
+            {/* Emma's Status */}
+            {conflictMetrics.currentLevel >= 4 && (
+              <div className="mt-4 pt-4 border-t border-neutral-200">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <p className="text-sm text-green-700 font-medium">
+                    Emma is monitoring for intervention opportunities
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Voice Interface */}
+        <div className="bg-white rounded-3xl shadow-xl p-8">
+          <CoupleVoiceRecorder
+            state={recorderState}
+            onStateChange={setRecorderState}
+            onTranscription={handleTranscription}
+            onError={handleError}
+            onAudioLevel={handleAudioLevel}
+            onSpeakerChange={handleSpeakerChange}
+            coupleMode={true}
+            detectionMode="hybrid"
+            pauseThreshold={400}
+            useAutoDetection={useAutoDetection}
+            useAdvancedDetection={useAdvancedDetection}
+            useCalibratedDetection={useCalibratedDetection}
+          />
+          
+          {/* Status Display */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-neutral-600">
+              Current speaker: <span className={`font-semibold ${
+                currentSpeaker === 'A' ? 'text-blue-700' : 'text-orange-700'
+              }`}>
+                {getSpeakerLabel(currentSpeaker)}
+              </span>
+            </p>
+            <p className="text-xs text-neutral-500 mt-1">
+              State: {recorderState} | Detection: {
+                useCalibratedDetection ? 'Calibrated Mode' :
+                useAdvancedDetection ? 'Hybrid AI Mode' :
+                useAutoDetection ? 'Auto Mode' : 
+                'Hybrid Mode'
+              }
+            </p>
+          </div>
+        </div>
+
+        {/* Controls */}
+        {messages.length > 0 && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => {
+                setMessages([])
+                setAudioLevelA(0)
+                setAudioLevelB(0)
+                setCurrentSpeaker('A')
+                setSuccessfulSwitches(0)
+                // Reset conflict intervention service
+                if (conflictServiceRef.current) {
+                  conflictServiceRef.current.resetSession()
+                  setConflictMetrics(conflictServiceRef.current.getConflictMetrics())
+                }
+                console.log('🔄 Couple session reset')
+              }}
+              disabled={recorderState !== 'idle'}
+              className="px-6 py-3 bg-neutral-500 hover:bg-neutral-600 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white rounded-2xl transition-colors"
+            >
+              Clear Conversation & Reset Emma
+            </button>
+          </div>
+        )}
+
+        {/* Testing Instructions */}
+        <div className="mt-8 bg-white/60 rounded-2xl p-6">
+          <h3 className="text-lg font-semibold text-neutral-800 mb-4">Real Couple Session Features</h3>
+          <div className="grid md:grid-cols-3 gap-4 text-sm text-neutral-700">
+            <div>
+              <h4 className="font-medium mb-2">🎤 Voice Detection:</h4>
+              <ul className="space-y-1">
+                <li>• {useCalibratedDetection ? '🔊 Calibrated Detection (Voice Profiles)' :
+                       useAdvancedDetection ? '🚀 AI Hybrid Detection (ML + RAG)' :
+                       useAutoDetection ? '🎯 Auto-detection (learning mode)' : 
+                       'Manual Partner A/B buttons'}</li>
+                <li>• {useCalibratedDetection ? 'Personalized voice profiling + 90% accuracy' :
+                       useAdvancedDetection ? 'Neural networks + voice embeddings' :
+                       useAutoDetection ? 'Automatic speaker learning' : 
+                       'Hybrid pitch + pause detection'}</li>
+                <li>• Color-coded messages</li>
+                <li>• Real-time audio monitoring</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">🧘‍♀️ Emma's Analysis:</h4>
+              <ul className="space-y-1">
+                <li>• Real-time conflict detection</li>
+                <li>• Gottman Method patterns</li>
+                <li>• Blame pattern counting</li>
+                <li>• Escalation trend analysis</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">🚨 Crisis Triggers:</h4>
+              <ul className="space-y-1">
+                <li>• "Red pineapple" safe word</li>
+                <li>• High conflict levels (≥7/10)</li>
+                <li>• Automatic Emma interventions</li>
+                <li>• De-escalation coaching</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-4 pt-4 border-t border-neutral-300">
+            <p className="text-xs text-neutral-600 text-center">
+              <strong>Try speaking:</strong> "You always leave dishes in the sink!" or "You never help with anything!" 
+              to trigger conflict detection and see Emma's intervention.
+            </p>
+          </div>
+        </div>
+
+        {/* Debug Information */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <h4 className="text-sm font-semibold text-yellow-800 mb-2">Debug Info:</h4>
+            <div className="text-xs text-yellow-700 font-mono space-y-1">
+              <div>State: {recorderState}</div>
+              <div>Current Speaker: {currentSpeaker}</div>
+              <div>Audio Level A: {audioLevelA.toFixed(3)}</div>
+              <div>Audio Level B: {audioLevelB.toFixed(3)}</div>
+              <div>Messages: {messages.length}</div>
+            </div>
+          </div>
+        )}
+          </>
+        )}
+      </div>
+    </div>
+  )
+}

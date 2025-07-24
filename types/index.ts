@@ -3,14 +3,68 @@
 // Voice-related types
 export type VoiceRecorderState = 'idle' | 'requesting-permission' | 'listening' | 'processing'
 export type AudioLevel = number // 0-1 range for audio visualization
+export type Speaker = 'A' | 'B' // For couple mode
+export type SpeakerDetectionMode = 'manual' | 'vad' | 'pitch' | 'hybrid'
 
 export interface VoiceMessage {
   id: string;
   text: string;
   timestamp: Date;
-  speaker: 'user' | 'emma';
+  speaker: 'user' | 'emma' | 'A' | 'B'; // Extended for couple mode
   audioUrl?: string;
   emotion?: EmotionData;
+}
+
+// Couple Session Types
+export interface CoupleVoiceMessage extends Omit<VoiceMessage, 'speaker'> {
+  speaker: 'A' | 'B' | 'emma';
+  conflictLevel?: number; // 0-10 scale
+  emotionalTone?: 'calm' | 'frustrated' | 'angry' | 'defensive' | 'sad';
+}
+
+// Voice Manager State
+export interface VoiceManagerState {
+  isInitialized: boolean
+  isCalibrated: boolean
+  currentProfile?: any // CoupleProfile from service
+  isRecording: boolean
+  currentSpeaker: Speaker | 'silence'
+  accuracy: number
+  detectionConfidence: number
+}
+
+export interface CoupleAudioState {
+  currentSpeaker: Speaker | 'silence';
+  speakerHistory: SpeakerSegment[];
+  audioLevelA: AudioLevel;
+  audioLevelB: AudioLevel;
+  vadEnabled: boolean;
+  manualMode: boolean;
+  detectionMode: SpeakerDetectionMode;
+  pauseThreshold: number; // ms for speaker switching
+  confidenceThreshold: number; // 0-1 for VAD decisions
+}
+
+export interface SpeakerSegment {
+  speaker: Speaker;
+  startTime: number;
+  endTime: number;
+  confidence: number;
+  audioLevel: AudioLevel;
+  pitchData?: PitchAnalysis;
+}
+
+export interface PitchAnalysis {
+  frequency: number; // Hz
+  confidence: number; // 0-1
+  clarity: number; // 0-1
+}
+
+export interface VADResult {
+  isSpeech: boolean;
+  confidence: number;
+  speaker?: Speaker;
+  timestamp: number;
 }
 
 export interface TranscriptionResult {
@@ -56,7 +110,7 @@ export interface CrisisLevel {
 export interface CrisisDetectionResult {
   isCrisis: boolean;
   severity: string;
-  category: 'domestic_violence' | 'mental_health' | 'substance_abuse' | 'child_safety' | 'none';
+  category: 'domestic_violence' | 'mental_health' | 'substance_abuse' | 'child_safety' | 'relationship_breakdown' | 'none';
   triggers: string[];
   immediateAction: boolean;
   resources: CrisisResource[];
@@ -108,6 +162,46 @@ export interface ConversationContext {
   conflictLevel: number; // 0-10 scale
   lastActivity: Date;
 }
+
+// Couple Session Conversation Types
+export interface CoupleConversationTurn extends Omit<ConversationTurn, 'speaker'> {
+  speaker: 'A' | 'B' | 'emma';
+  conflictLevel?: number;
+  interventionTriggered?: boolean;
+  blamePatterns?: string[];
+  emotionalEscalation?: boolean;
+}
+
+export interface CoupleConversationState {
+  messages: CoupleVoiceMessage[];
+  currentSpeaker: Speaker | 'silence';
+  conflictLevel: number; // 0-10 scale
+  sessionMode: 'single' | 'couple';
+  partnerAMessages: CoupleVoiceMessage[];
+  partnerBMessages: CoupleVoiceMessage[];
+  emmaInterventions: CoupleVoiceMessage[];
+  lastSpeakerSwitch: Date;
+  totalSpeakingTimeA: number; // ms
+  totalSpeakingTimeB: number; // ms
+}
+
+// Conflict Detection Types for Couples
+export interface ConflictMetrics {
+  currentLevel: number; // 0-10 scale
+  escalationTrend: 'escalating' | 'stable' | 'de-escalating';
+  blamePatternCount: number;
+  interruptionCount: number;
+  lastInterventionTime: number; // timestamp
+  sessionStartTime: number; // timestamp
+}
+
+// Emma Intervention Types
+export type EmmaInterventionTrigger = 
+  | 'crisis' 
+  | 'escalation' 
+  | 'gottman_horsemen' 
+  | 'pattern_interrupt' 
+  | 'prolonged_conflict'
 
 // Voice Processing Types
 export interface VoiceSettings {

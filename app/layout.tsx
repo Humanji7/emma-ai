@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import type { ReactNode } from 'react'
 import './globals.css'
 import { CriticalErrorBoundary } from '@/components/error/ErrorBoundary'
 
@@ -10,11 +11,11 @@ export const metadata: Metadata = {
   description: 'AI-powered relationship coaching with crisis detection',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+interface RootLayoutProps {
+  children: ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>

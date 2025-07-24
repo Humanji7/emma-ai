@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест записи голоса - Emma AI</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .record-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .record-button:hover:not(:disabled) {
+            background: #2563eb;
+        }
+        .record-button:disabled {
+            background: #ef4444;
+            cursor: not-allowed;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .recording {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            margin: 10px 0;
+        }
+        .bar {
+            width: 3px;
+            margin: 0 1px;
+            background: #3b82f6;
+            border-radius: 2px;
+            transition: height 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Тест записи голоса для калибровки</h1>
+        <p>Этот тест проверяет функциональность записи голоса для системы калибровки Emma AI.</p>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <button id="recordBtn" class="record-button">
+            🎤 Записать образец (3 сек)
+        </button>
+        
+        <div id="waveform" class="waveform" style="display: none;">
+            <div class="bar" style="height: 10px;"></div>
+            <div class="bar" style="height: 20px;"></div>
+            <div class="bar" style="height: 15px;"></div>
+            <div class="bar" style="height: 25px;"></div>
+            <div class="bar" style="height: 10px;"></div>
+            <div class="bar" style="height: 18px;"></div>
+            <div class="bar" style="height: 12px;"></div>
+            <div class="bar" style="height: 22px;"></div>
+        </div>
+        
+        <div id="results">
+            <h3>Результаты записи:</h3>
+            <ul id="recordingResults"></ul>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+            <h4>📋 Инструкции для тестирования:</h4>
+            <ol>
+                <li>Нажмите кнопку "Записать образец"</li>
+                <li>Разрешите доступ к микрофону когда браузер спросит</li>
+                <li>Четко произнесите любую фразу в течение 3 секунд</li>
+                <li>Проверьте результаты в консоли браузера (F12)</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        let isRecording = false;
+        let audioContext = null;
+        let analyser = null;
+        let recordingData = [];
+
+        const recordBtn = document.getElementById('recordBtn');
+        const status = document.getElementById('status');
+        const waveform = document.getElementById('waveform');
+        const results = document.getElementById('recordingResults');
+
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+        }
+
+        function hideStatus() {
+            status.style.display = 'none';
+        }
+
+        function addResult(message) {
+            const li = document.createElement('li');
+            li.textContent = message;
+            results.appendChild(li);
+        }
+
+        function animateWaveform() {
+            if (!isRecording) return;
+            
+            const bars = waveform.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                const height = Math.random() * 30 + 5;
+                bar.style.height = height + 'px';
+            });
+            
+            requestAnimationFrame(animateWaveform);
+        }
+
+        async function startRecording() {
+            if (isRecording) return;
+            
+            try {
+                isRecording = true;
+                recordBtn.disabled = true;
+                recordBtn.textContent = '🔴 Запись... (3 сек)';
+                recordBtn.classList.add('pulse');
+                
+                showStatus('Запрашиваю доступ к микрофону...', 'recording');
+
+                // Get microphone access
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        sampleRate: 44100,
+                        channelCount: 1
+                    }
+                });
+
+                console.log('🎤 Microphone access granted');
+                addResult('✅ Доступ к микрофону получен');
+
+                // Create audio context
+                audioContext = new AudioContext({ sampleRate: 44100 });
+                const source = audioContext.createMediaStreamSource(stream);
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 2048;
+                source.connect(analyser);
+
+                console.log('🎧 Audio context created, sample rate:', audioContext.sampleRate);
+                addResult(`🎧 Контекст аудио создан (${audioContext.sampleRate}Hz)`);
+
+                showStatus('Идет запись... говорите сейчас!', 'recording');
+                waveform.style.display = 'flex';
+                animateWaveform();
+
+                // Record for 3 seconds
+                const recordingDuration = 3000;
+                const sampleRate = audioContext.sampleRate;
+                const bufferLength = Math.floor(sampleRate * recordingDuration / 1000);
+                const audioBuffer = new Float32Array(bufferLength);
+                
+                let bufferIndex = 0;
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                
+                const recordLoop = () => {
+                    if (bufferIndex >= bufferLength || !isRecording) {
+                        // Recording complete
+                        stream.getTracks().forEach(track => track.stop());
+                        audioContext.close();
+                        processRecording(audioBuffer, sampleRate);
+                        return;
+                    }
+                    
+                    analyser.getByteTimeDomainData(dataArray);
+                    
+                    // Convert to float32 and store
+                    for (let i = 0; i < dataArray.length && bufferIndex < bufferLength; i++, bufferIndex++) {
+                        audioBuffer[bufferIndex] = (dataArray[i] - 128) / 128.0;
+                    }
+                    
+                    requestAnimationFrame(recordLoop);
+                };
+                
+                recordLoop();
+                
+            } catch (error) {
+                console.error('❌ Recording failed:', error);
+                addResult(`❌ Ошибка записи: ${error.message}`);
+                
+                if (error.name === 'NotAllowedError') {
+                    showStatus('Доступ к микрофону заблокирован. Разрешите доступ в настройках браузера.', 'error');
+                } else {
+                    showStatus(`Ошибка: ${error.message}`, 'error');
+                }
+                
+                resetRecording();
+            }
+        }
+
+        function processRecording(audioBuffer, sampleRate) {
+            console.log(`🎤 Recording completed: ${audioBuffer.length} samples at ${sampleRate}Hz`);
+            
+            // Analyze audio quality
+            const rms = Math.sqrt(audioBuffer.reduce((sum, sample) => sum + sample * sample, 0) / audioBuffer.length);
+            const maxAmplitude = Math.max(...audioBuffer.map(Math.abs));
+            const nonZeroSamples = audioBuffer.filter(sample => Math.abs(sample) > 0.01).length;
+            const audioPresent = nonZeroSamples > audioBuffer.length * 0.1; // At least 10% non-zero
+            
+            console.log('📊 Audio Analysis:', {
+                samples: audioBuffer.length,
+                rms: rms.toFixed(4),
+                maxAmplitude: maxAmplitude.toFixed(4),
+                nonZeroSamples,
+                audioPresent
+            });
+            
+            addResult(`📊 Записано ${audioBuffer.length} сэмплов`);
+            addResult(`📈 RMS: ${rms.toFixed(4)}, Max: ${maxAmplitude.toFixed(4)}`);
+            addResult(`🔊 Активных сэмплов: ${nonZeroSamples} (${((nonZeroSamples/audioBuffer.length)*100).toFixed(1)}%)`);
+            
+            if (audioPresent && rms > 0.001) {
+                showStatus('✅ Запись успешна! Голос обнаружен.', 'success');
+                addResult('✅ Качество записи: ХОРОШО');
+            } else {
+                showStatus('⚠️ Слабый сигнал. Попробуйте говорить громче.', 'error');
+                addResult('⚠️ Качество записи: СЛАБО');
+            }
+            
+            resetRecording();
+        }
+
+        function resetRecording() {
+            isRecording = false;
+            recordBtn.disabled = false;
+            recordBtn.textContent = '🎤 Записать образец (3 сек)';
+            recordBtn.classList.remove('pulse');
+            waveform.style.display = 'none';
+        }
+
+        recordBtn.addEventListener('click', startRecording);
+
+        // Add some info about browser compatibility
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showStatus('❌ Ваш браузер не поддерживает запись голоса', 'error');
+                recordBtn.disabled = true;
+                addResult('❌ MediaDevices API не поддерживается');
+            } else {
+                addResult('✅ Браузер поддерживает запись голоса');
+            }
+            
+            if (!window.AudioContext && !window.webkitAudioContext) {
+                addResult('❌ Web Audio API не поддерживается');
+            } else {
+                addResult('✅ Web Audio API поддерживается');
+            }
+        });
+    </script>
+</body>
+</html>

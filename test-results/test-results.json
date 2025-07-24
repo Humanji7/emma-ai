@@ -1,0 +1,1902 @@
+{
+  "config": {
+    "configFile": "/Users/admin/Downloads/projects/Emma_AI/playwright.config.ts",
+    "rootDir": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "test-results/html-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/test-results.json"
+        }
+      ],
+      [
+        "line",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "emma-ai-production.spec.ts",
+      "file": "emma-ai-production.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Emma AI Production App E2E Tests",
+          "file": "emma-ai-production.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "1. Navigation and Demo Page Voice Interface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7827,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Demo Page Voice Interface\n"
+                        },
+                        {
+                          "text": "✅ Homepage loaded in 3265.00ms\n"
+                        },
+                        {
+                          "text": "🔄 Navigating to /demo page...\n"
+                        },
+                        {
+                          "text": "✅ Voice interface button found\n"
+                        },
+                        {
+                          "text": "✅ Recording state visual feedback detected\n"
+                        },
+                        {
+                          "text": "Console: Voice error: Failed to access microphone. Please try again.\n"
+                        },
+                        {
+                          "text": "Console: getUserMedia error: NotSupportedError: Not supported\n"
+                        },
+                        {
+                          "text": "✅ Voice interface interaction completed\n"
+                        },
+                        {
+                          "text": "Console: Voice error: Failed to access microphone. Please try again.\n"
+                        },
+                        {
+                          "text": "Console: getUserMedia error: NotSupportedError: Not supported\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:09.676Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-698516d630c184bfe0b5",
+              "file": "emma-ai-production.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "2. Monitoring Page Quality Gate System",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4206,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Monitoring Page Quality Gates\n"
+                        },
+                        {
+                          "text": "⚠️ No quality gate elements found - checking page content\n"
+                        },
+                        {
+                          "text": "Page content preview: Emma AI MonitoringQuality gates and system health dashboardRefreshSystem Status✅ HEALTHYActive Alerts0Interactions0Crisis Detections0Quality MetricsAvg Confidence0.0%Avg Response Time0msValidation Failures0.0%Recommendations✅ No recommendations - system operating optimallyQuality Gate TestingTest MessageQuick tests:I'm feeling stressed about my relationsh...I can't take this anymore, I want to hur...My partner and I had a fight yesterdayI feel hopeless and want to end it allHow can I communicate\n"
+                        },
+                        {
+                          "text": "📊 Found 0 metrics elements\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:19.337Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-5de81ce1641e92bd6eae",
+              "file": "emma-ai-production.spec.ts",
+              "line": 76,
+              "column": 7
+            },
+            {
+              "title": "3. Crisis Detection Workflow via Chat Interface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2793,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Crisis Detection Workflow\n"
+                        },
+                        {
+                          "text": "⚠️ Chat input not found\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:23.545Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-9023c7d56b4da09504ab",
+              "file": "emma-ai-production.spec.ts",
+              "line": 121,
+              "column": 7
+            },
+            {
+              "title": "4. Responsive Design and Accessibility Compliance",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4036,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Responsive Design and Accessibility\n"
+                        },
+                        {
+                          "text": "📱 Testing mobile viewport (375x667)\n"
+                        },
+                        {
+                          "text": "✅ No horizontal scroll on mobile\n"
+                        },
+                        {
+                          "text": "📱 Testing tablet viewport (768x1024)\n"
+                        },
+                        {
+                          "text": "✅ No horizontal scroll on tablet\n"
+                        },
+                        {
+                          "text": "📱 Testing desktop viewport (1920x1080)\n"
+                        },
+                        {
+                          "text": "✅ No horizontal scroll on desktop\n"
+                        },
+                        {
+                          "text": "♿ Running accessibility checks...\n"
+                        },
+                        {
+                          "text": "✅ Heading structure: 1 elements found\n"
+                        },
+                        {
+                          "text": "⚠️ Image alt attributes: No elements found\n"
+                        },
+                        {
+                          "text": "⚠️ Interactive buttons: No elements found\n"
+                        },
+                        {
+                          "text": "⚠️ ARIA labels: No elements found\n"
+                        },
+                        {
+                          "text": "⚠️ Main content landmark: No elements found\n"
+                        },
+                        {
+                          "text": "🔍 Tab navigation: First focused element is A\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:26.339Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-5c2226c46f9dcb99d7f2",
+              "file": "emma-ai-production.spec.ts",
+              "line": 196,
+              "column": 7
+            },
+            {
+              "title": "5. Performance Metrics and Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4943,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Performance Metrics and Core Web Vitals\n"
+                        },
+                        {
+                          "text": "⏱️ Total page load time: 1775.00ms\n"
+                        },
+                        {
+                          "text": "📊 Core Web Vitals Results:\n"
+                        },
+                        {
+                          "text": "   LCP: 796.00ms (target: <2500ms)\n"
+                        },
+                        {
+                          "text": "   CLS: N/A (target: <0.1)\n"
+                        },
+                        {
+                          "text": "🚀 Performance Timing Metrics:\n"
+                        },
+                        {
+                          "text": "   DOM Content Loaded: 666ms\n"
+                        },
+                        {
+                          "text": "   Load Complete: 1313ms\n"
+                        },
+                        {
+                          "text": "   First Paint: 796.00ms\n"
+                        },
+                        {
+                          "text": "   First Contentful Paint: 796.00ms\n"
+                        },
+                        {
+                          "text": "📦 Resource Analysis:\n"
+                        },
+                        {
+                          "text": "   Total Resources: 6\n"
+                        },
+                        {
+                          "text": "   Slow Resources (>1s): 0\n"
+                        },
+                        {
+                          "text": "   Large Resources (>100KB): 1\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:30.377Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-549cd86e22b9f8ca2dc0",
+              "file": "emma-ai-production.spec.ts",
+              "line": 258,
+              "column": 7
+            },
+            {
+              "title": "1. Navigation and Demo Page Voice Interface",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 26,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:35.848Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-c5779-d-Demo-Page-Voice-Interface-firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    },
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:39.638Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-c5779-d-Demo-Page-Voice-Interface-firefox-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-8c0bbbc55a971bd6990d",
+              "file": "emma-ai-production.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "2. Monitoring Page Quality Gate System",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:40.967Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-74d60-ng-Page-Quality-Gate-System-firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    },
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:42.221Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-74d60-ng-Page-Quality-Gate-System-firefox-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-c92c46c1f4bec6841ae9",
+              "file": "emma-ai-production.spec.ts",
+              "line": 76,
+              "column": 7
+            },
+            {
+              "title": "3. Crisis Detection Workflow via Chat Interface",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:43.494Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-dad87-Workflow-via-Chat-Interface-firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    },
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:44.762Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-dad87-Workflow-via-Chat-Interface-firefox-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-b9d5157b6a7b181c7b45",
+              "file": "emma-ai-production.spec.ts",
+              "line": 121,
+              "column": 7
+            },
+            {
+              "title": "4. Responsive Design and Accessibility Compliance",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 23,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:46.045Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-ba46b-nd-Accessibility-Compliance-firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    },
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:47.327Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-ba46b-nd-Accessibility-Compliance-firefox-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-7fea196adc4d8304316c",
+              "file": "emma-ai-production.spec.ts",
+              "line": 196,
+              "column": 7
+            },
+            {
+              "title": "5. Performance Metrics and Core Web Vitals",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:48.670Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-699e5-Metrics-and-Core-Web-Vitals-firefox/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    },
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: microphone",
+                        "stack": "Error: browser.newContext: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 15,
+                          "line": 12
+                        },
+                        "snippet": "  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 15,
+                            "line": 12
+                          },
+                          "message": "Error: browser.newContext: Unknown permission: microphone\n\n  10 |   test.beforeEach(async ({ browser }) => {\n  11 |     // Create new context with mobile and desktop viewports\n> 12 |     context = await browser.newContext({\n     |               ^\n  13 |       viewport: { width: 1280, height: 720 },\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:12:15"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 19,
+                            "line": 24
+                          },
+                          "message": "TypeError: Cannot read properties of undefined (reading 'close')\n\n  22 |\n  23 |   test.afterEach(async () => {\n> 24 |     await context.close();\n     |                   ^\n  25 |   });\n  26 |\n  27 |   test('1. Navigation and Demo Page Voice Interface', async () => {\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:24:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:49.916Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-699e5-Metrics-and-Core-Web-Vitals-firefox-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 15,
+                        "line": 12
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-3f85a752b31d3cd3be1e",
+              "file": "emma-ai-production.spec.ts",
+              "line": 258,
+              "column": 7
+            },
+            {
+              "title": "1. Navigation and Demo Page Voice Interface",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 228,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:51.188Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-c5779-d-Demo-Page-Voice-Interface-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    },
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 127,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:54.254Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-c5779-d-Demo-Page-Voice-Interface-webkit-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-030d8b7767133cb0d479",
+              "file": "emma-ai-production.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "2. Monitoring Page Quality Gate System",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 127,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:54.874Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-74d60-ng-Page-Quality-Gate-System-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    },
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 143,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:55.504Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-74d60-ng-Page-Quality-Gate-System-webkit-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-dd39875f3b01bb6b371e",
+              "file": "emma-ai-production.spec.ts",
+              "line": 76,
+              "column": 7
+            },
+            {
+              "title": "3. Crisis Detection Workflow via Chat Interface",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 117,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:56.161Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-dad87-Workflow-via-Chat-Interface-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    },
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 178,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:56.765Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-dad87-Workflow-via-Chat-Interface-webkit-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-abf5e65e8a4e4314f6b7",
+              "file": "emma-ai-production.spec.ts",
+              "line": 121,
+              "column": 7
+            },
+            {
+              "title": "4. Responsive Design and Accessibility Compliance",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 144,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:57.454Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-ba46b-nd-Accessibility-Compliance-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    },
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 120,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:58.097Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-ba46b-nd-Accessibility-Compliance-webkit-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-0bca97d813e75ec50770",
+              "file": "emma-ai-production.spec.ts",
+              "line": 196,
+              "column": 7
+            },
+            {
+              "title": "5. Performance Metrics and Core Web Vitals",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 110,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:58.697Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-699e5-Metrics-and-Core-Web-Vitals-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    },
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 114,
+                      "error": {
+                        "message": "Error: browserContext.newPage: Unknown permission: microphone",
+                        "stack": "Error: browserContext.newPage: Unknown permission: microphone\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26",
+                        "location": {
+                          "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                          "column": 26,
+                          "line": 16
+                        },
+                        "snippet": "  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                            "column": 26,
+                            "line": 16
+                          },
+                          "message": "Error: browserContext.newPage: Unknown permission: microphone\n\n  14 |       permissions: ['microphone'], // Grant microphone permission for voice tests\n  15 |     });\n> 16 |     page = await context.newPage();\n     |                          ^\n  17 |     \n  18 |     // Enable console logging for debugging\n  19 |     page.on('console', msg => console.log(`Console: ${msg.text()}`));\n    at /Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts:16:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2025-07-23T08:42:59.308Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/admin/Downloads/projects/Emma_AI/test-results/screenshots/emma-ai-production-Emma-AI-699e5-Metrics-and-Core-Web-Vitals-webkit-retry1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/admin/Downloads/projects/Emma_AI/e2e-tests/emma-ai-production.spec.ts",
+                        "column": 26,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-8d127d5fe46ab16ad592",
+              "file": "emma-ai-production.spec.ts",
+              "line": 258,
+              "column": 7
+            },
+            {
+              "title": "1. Navigation and Demo Page Voice Interface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6147,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Demo Page Voice Interface\n"
+                        },
+                        {
+                          "text": "✅ Homepage loaded in 2211.00ms\n"
+                        },
+                        {
+                          "text": "🔄 Navigating to /demo page...\n"
+                        },
+                        {
+                          "text": "✅ Voice interface button found\n"
+                        },
+                        {
+                          "text": "Console: Voice error: Failed to access microphone. Please try again.\n"
+                        },
+                        {
+                          "text": "Console: getUserMedia error: NotSupportedError: Not supported\n"
+                        },
+                        {
+                          "text": "✅ Voice interface interaction completed\n"
+                        },
+                        {
+                          "text": "Console: Voice error: Failed to access microphone. Please try again.\n"
+                        },
+                        {
+                          "text": "Console: getUserMedia error: NotSupportedError: Not supported\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:42:59.899Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-7b8d7a6fb3f703034833",
+              "file": "emma-ai-production.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "2. Monitoring Page Quality Gate System",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3143,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Monitoring Page Quality Gates\n"
+                        },
+                        {
+                          "text": "⚠️ No quality gate elements found - checking page content\n"
+                        },
+                        {
+                          "text": "Page content preview: Emma AI MonitoringQuality gates and system health dashboardRefreshSystem Status✅ HEALTHYActive Alerts0Interactions0Crisis Detections0Quality MetricsAvg Confidence0.0%Avg Response Time0msValidation Failures0.0%Recommendations✅ No recommendations - system operating optimallyQuality Gate TestingTest MessageQuick tests:I'm feeling stressed about my relationsh...I can't take this anymore, I want to hur...My partner and I had a fight yesterdayI feel hopeless and want to end it allHow can I communicate\n"
+                        },
+                        {
+                          "text": "📊 Found 0 metrics elements\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:43:06.322Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-59523e7f3d75cb3fcb3c",
+              "file": "emma-ai-production.spec.ts",
+              "line": 76,
+              "column": 7
+            },
+            {
+              "title": "3. Crisis Detection Workflow via Chat Interface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2287,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Crisis Detection Workflow\n"
+                        },
+                        {
+                          "text": "⚠️ Chat input not found\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:43:09.467Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-70aaec53f2fa3ba1fd26",
+              "file": "emma-ai-production.spec.ts",
+              "line": 121,
+              "column": 7
+            },
+            {
+              "title": "4. Responsive Design and Accessibility Compliance",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4746,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Responsive Design and Accessibility\n"
+                        },
+                        {
+                          "text": "📱 Testing mobile viewport (375x667)\n"
+                        },
+                        {
+                          "text": "✅ No horizontal scroll on mobile\n"
+                        },
+                        {
+                          "text": "📱 Testing tablet viewport (768x1024)\n"
+                        },
+                        {
+                          "text": "✅ No horizontal scroll on tablet\n"
+                        },
+                        {
+                          "text": "📱 Testing desktop viewport (1920x1080)\n"
+                        },
+                        {
+                          "text": "✅ No horizontal scroll on desktop\n"
+                        },
+                        {
+                          "text": "♿ Running accessibility checks...\n"
+                        },
+                        {
+                          "text": "✅ Heading structure: 1 elements found\n"
+                        },
+                        {
+                          "text": "⚠️ Image alt attributes: No elements found\n"
+                        },
+                        {
+                          "text": "⚠️ Interactive buttons: No elements found\n"
+                        },
+                        {
+                          "text": "⚠️ ARIA labels: No elements found\n"
+                        },
+                        {
+                          "text": "⚠️ Main content landmark: No elements found\n"
+                        },
+                        {
+                          "text": "🔍 Tab navigation: First focused element is A\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:43:11.756Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-7e48de5c86040ddec5ca",
+              "file": "emma-ai-production.spec.ts",
+              "line": 196,
+              "column": 7
+            },
+            {
+              "title": "5. Performance Metrics and Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile-chrome",
+                  "projectName": "mobile-chrome",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5386,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🎯 Testing Performance Metrics and Core Web Vitals\n"
+                        },
+                        {
+                          "text": "⏱️ Total page load time: 1968.00ms\n"
+                        },
+                        {
+                          "text": "📊 Core Web Vitals Results:\n"
+                        },
+                        {
+                          "text": "   LCP: 1064.00ms (target: <2500ms)\n"
+                        },
+                        {
+                          "text": "   CLS: N/A (target: <0.1)\n"
+                        },
+                        {
+                          "text": "🚀 Performance Timing Metrics:\n"
+                        },
+                        {
+                          "text": "   DOM Content Loaded: 917ms\n"
+                        },
+                        {
+                          "text": "   Load Complete: 1468ms\n"
+                        },
+                        {
+                          "text": "   First Paint: 1064.00ms\n"
+                        },
+                        {
+                          "text": "   First Contentful Paint: 1064.00ms\n"
+                        },
+                        {
+                          "text": "📦 Resource Analysis:\n"
+                        },
+                        {
+                          "text": "   Total Resources: 6\n"
+                        },
+                        {
+                          "text": "   Slow Resources (>1s): 0\n"
+                        },
+                        {
+                          "text": "   Large Resources (>100KB): 1\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-23T08:43:16.504Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "66ec04d7981e1dd70a5d-e7e4952a2778aa62cb32",
+              "file": "emma-ai-production.spec.ts",
+              "line": 258,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-07-23T08:42:09.254Z",
+    "duration": 72678.689,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 10,
+    "flaky": 0
+  }
+}

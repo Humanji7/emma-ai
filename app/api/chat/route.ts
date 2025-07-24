@@ -28,9 +28,29 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json()
-    const { message, emotion } = body as {
+    const { 
+      message, 
+      emotion,
+      speaker,
+      coupleMode,
+      conversationHistory,
+      conflictLevel,
+      emotionalTone
+    } = body as {
       message: string
       emotion?: EmotionData
+      speaker?: 'A' | 'B' | 'emma'
+      coupleMode?: boolean
+      conversationHistory?: Array<{
+        id: string
+        text: string
+        speaker: 'A' | 'B' | 'emma'
+        timestamp: string
+        conflictLevel?: number
+        emotionalTone?: string
+      }>
+      conflictLevel?: number
+      emotionalTone?: 'calm' | 'frustrated' | 'angry' | 'defensive' | 'sad'
     }
 
     // Validate input
@@ -48,11 +68,48 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate couple mode specific fields
+    if (coupleMode) {
+      if (speaker && !['A', 'B', 'emma'].includes(speaker)) {
+        return NextResponse.json(
+          { error: 'Invalid speaker. Must be A, B, or emma' },
+          { status: 400 }
+        )
+      }
+      
+      if (conflictLevel !== undefined && (typeof conflictLevel !== 'number' || conflictLevel < 0 || conflictLevel > 10)) {
+        return NextResponse.json(
+          { error: 'Conflict level must be a number between 0 and 10' },
+          { status: 400 }
+        )
+      }
+      
+      if (conversationHistory && !Array.isArray(conversationHistory)) {
+        return NextResponse.json(
+          { error: 'Conversation history must be an array' },
+          { status: 400 }
+        )
+      }
+    }
+
     // Process with Emma AI (with monitoring)
     const sessionId = request.headers.get('x-session-id') || undefined
     const userId = request.headers.get('x-user-id') || undefined
     
-    const result = await emma.processUserInput(message, emotion, { userId, sessionId })
+    // Enhanced metadata for couple mode
+    const metadata = {
+      userId,
+      sessionId,
+      coupleMode,
+      speaker,
+      conflictLevel,
+      emotionalTone,
+      conversationHistory: conversationHistory?.slice(-10) // Limit to last 10 messages for context
+    }
+    
+    const result = coupleMode 
+      ? await emma.processCoupleInput(message, emotion, metadata)
+      : await emma.processUserInput(message, emotion, { userId, sessionId })
 
     // Log monitoring results
     if (!result.monitoring.passed) {
@@ -66,7 +123,7 @@ export async function POST(request: NextRequest) {
     if (result.response.crisisDetected) {
       console.error('CRISIS DETECTED WITH MONITORING:', {
         timestamp: new Date().toISOString(),
-        message: message.substring(0, 100) + '...',
+        message: `${message.substring(0, 100)}...`,
         monitoring: result.monitoring,
         requiresReview: result.response.requiresHumanReview
       })
@@ -83,7 +140,15 @@ export async function POST(request: NextRequest) {
           passed: result.monitoring.passed,
           alertCount: result.monitoring.alerts.length,
           recommendations: result.monitoring.recommendations.slice(0, 3) // Limit for API
-        }
+        },
+        // Couple mode specific metadata
+        ...(coupleMode && 'conflictAnalysis' in result && {
+          coupleMode: true,
+          speaker: speaker || 'unknown',
+          conflictAnalysis: (result as any).conflictAnalysis,
+          interventionRecommendation: (result as any).interventionRecommendation,
+          speakerContext: (result as any).speakerContext
+        })
       }
     }, {
       headers: {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import VoiceRecorder from './VoiceRecorder'
 import VoiceVisualizer from './VoiceVisualizer'
@@ -22,6 +22,11 @@ export default function VoiceInterface({
   prompt = "Tap to talk with Emma"
 }: VoiceInterfaceProps) {
   const [recorderState, setRecorderState] = useState<VoiceRecorderState>('idle')
+  
+  // Debug state changes
+  useEffect(() => {
+    console.log('🎤 VoiceInterface state changed to:', recorderState)
+  }, [recorderState])
   const [currentError, setCurrentError] = useState<string | null>(null)
   const [audioLevel, setAudioLevel] = useState<AudioLevel>(0)
 
@@ -31,16 +36,33 @@ export default function VoiceInterface({
     onUserInput(text)
   }, [onUserInput])
 
-  // Handle recording errors
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Handle recording errors with cleanup
   const handleError = useCallback((error: string) => {
     setCurrentError(error)
     onError(error)
     
+    // Clear existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    
     // Clear error after 5 seconds
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setCurrentError(null)
+      timeoutRef.current = null
     }, 5000)
   }, [onError])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   // Get prompt text based on state
   const getPromptText = () => {
@@ -84,6 +106,7 @@ export default function VoiceInterface({
       <div className="relative">
         <VoiceVisualizer
           state={recorderState}
+          audioLevel={audioLevel}
           size="lg"
           className="mb-4"
         />
@@ -95,6 +118,7 @@ export default function VoiceInterface({
             onStateChange={setRecorderState}
             onTranscription={handleTranscription}
             onError={handleError}
+            onAudioLevel={setAudioLevel}
             disabled={disabled}
             className="relative z-10"
           />
@@ -132,6 +156,11 @@ export default function VoiceInterface({
         </p>
       </div>
 
+      {/* Debug state display */}
+      <div className="text-xs text-neutral-500 font-mono">
+        State: {recorderState} | AudioLevel: {audioLevel}
+      </div>
+      
       {/* Visual indicators for accessibility */}
       <div className="flex items-center justify-center space-x-2 opacity-60">
         <div className={cn(

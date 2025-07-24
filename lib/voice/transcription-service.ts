@@ -169,6 +169,9 @@ export class WebSpeechAPIProvider implements TranscriptionProvider {
         }
 
         const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+        if (!SpeechRecognition) {
+          throw new VoiceProcessingError('Speech recognition not available', 'NOT_SUPPORTED', false)
+        }
         const recognition = new SpeechRecognition()
         
         recognition.continuous = false
